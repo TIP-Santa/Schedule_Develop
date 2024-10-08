@@ -3,7 +3,6 @@ package com.sparta.schedule_develop.controller;
 import com.sparta.schedule_develop.dto.ScheduleRequestDto;
 import com.sparta.schedule_develop.dto.ScheduleResponseDto;
 import com.sparta.schedule_develop.service.ScheduleService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +11,9 @@ import java.util.List;
 @RequestMapping("/api/schedule")
 public class ScheduleController {
 
-    private ScheduleService scheduleService;
-    public ScheduleController(JdbcTemplate jdbcTemplate) {
-        this.scheduleService = new ScheduleService(jdbcTemplate);
+    private final ScheduleService scheduleService;
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
     }
 
     @PostMapping
