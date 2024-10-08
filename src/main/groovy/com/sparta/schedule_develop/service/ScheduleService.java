@@ -10,9 +10,9 @@ import java.util.List;
 
 public class ScheduleService {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final ScheduleRepository scheduleRepository;
     public ScheduleService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.scheduleRepository = new ScheduleRepository(jdbcTemplate);
     }
 
     // POST
@@ -20,7 +20,6 @@ public class ScheduleService {
         // RequestDto > Entity
         Schedule schedule = new Schedule();
         // DB 저장
-        ScheduleRepository scheduleRepository = new ScheduleRepository(jdbcTemplate);
         Schedule saveSchedule = scheduleRepository.save(schedule);
         // Entity > ResponseDto
         ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
@@ -29,13 +28,11 @@ public class ScheduleService {
 
     // GET
     public List<ScheduleResponseDto> getAllSchedules() {
-        ScheduleRepository scheduleRepository = new ScheduleRepository(jdbcTemplate);
         return scheduleRepository.findAll();
     }
 
     // PUT
     public Long getUpdateSchedule(Long scheduleKey, ScheduleRequestDto updateScheduleRequestDto) {
-        ScheduleRepository scheduleRepository = new ScheduleRepository(jdbcTemplate);
         // 해당 일정이 DB에 존재하는지 확인
         Schedule schedule = scheduleRepository.findByKey(scheduleKey);
         if(schedule == null){
@@ -49,7 +46,6 @@ public class ScheduleService {
 
 
     public Long getDeleteSchedule(Long scheduleKey) {
-        ScheduleRepository scheduleRepository = new ScheduleRepository(jdbcTemplate);
         // 해당 일정이 DB에 존재하는지 확인
         Schedule schedule = scheduleRepository.findByKey(scheduleKey);
         if(schedule == null){
