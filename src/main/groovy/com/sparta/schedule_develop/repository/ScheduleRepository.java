@@ -3,11 +3,13 @@ package com.sparta.schedule_develop.repository;
 import com.sparta.schedule_develop.dto.ScheduleRequestDto;
 import com.sparta.schedule_develop.dto.ScheduleResponseDto;
 import com.sparta.schedule_develop.entity.Schedule;
+import jakarta.persistence.EntityManager;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -20,6 +22,26 @@ public class ScheduleRepository {
     public ScheduleRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    @Transactional
+    public Schedule createSchedule(EntityManager em) {
+        Schedule schedule = em.find(Schedule.class, 1);
+        schedule.setUserName("백한비2");
+        schedule.setScheduleDate(LocalDate.parse("2024-10-08"));
+        schedule.setScheduleTitle("19:00 라이브 세션2");
+        schedule.setScheduleDescription("git 코드리뷰 세션2");
+
+        System.out.println("createSchedule 메서드 종료");
+        return schedule;
+    }
+
+
+
+
+
+
+
+
 
     // POST
     public Schedule save(Schedule schedule) {
