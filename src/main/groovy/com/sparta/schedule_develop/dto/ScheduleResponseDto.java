@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 public class ScheduleResponseDto {
     private Long scheduleKey;
     private String userName;
+    private LocalDate scheduleDate;
     private String scheduleTitle;
     private String scheduleDescription;
-    private LocalDate scheduleDate;
 //    private String schedulePassword;
     private String userId;
     private LocalDateTime createDateTime;
@@ -27,5 +27,15 @@ public class ScheduleResponseDto {
         this.userId = schedule.getUserId();
         this.createDateTime = schedule.getCreateDateTime();
         this.updateDateTime = schedule.getUpdateDateTime();
+    }
+
+    public ScheduleResponseDto(Long scheduleKey, String userName, LocalDate scheduleDate, String scheduleTitle, String scheduleDescription, String userId) {
+        this.scheduleKey = scheduleKey;
+        this.userName = userName;
+        this.scheduleDate = scheduleDate;
+        this.scheduleTitle = scheduleTitle;
+        this.scheduleDescription = scheduleDescription;
+        this.userId = userId;
+
     }
 }
