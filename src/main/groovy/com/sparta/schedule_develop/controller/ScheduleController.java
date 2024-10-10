@@ -27,13 +27,13 @@ public class ScheduleController {
     }
 
     @PutMapping("/{scheduleKey}")
-    public Long updateSchedule(@PathVariable Long scheduleKey, @RequestBody ScheduleRequestDto updateScheduleRequestDto){
-        return scheduleService.getUpdateSchedule(scheduleKey, updateScheduleRequestDto);
+    public Long updateSchedule(@PathVariable("scheduleKey") Long scheduleKey, @RequestBody ScheduleRequestDto updateScheduleRequestDto){
+        return scheduleService.updateSchedule(scheduleKey, updateScheduleRequestDto);
     }
 
     @DeleteMapping("/{scheduleKey}")
     public Long deleteSchedule(@PathVariable Long scheduleKey){
-        return scheduleService.getDeleteSchedule(scheduleKey);
+        return scheduleService.deleteSchedule(scheduleKey);
     }
 
 
