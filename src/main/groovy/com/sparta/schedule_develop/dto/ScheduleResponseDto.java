@@ -29,12 +29,13 @@ public class ScheduleResponseDto {
         this.lastModifiedDateTime = schedule.getLastModifiedDateTime();
     }
 
-    public ScheduleResponseDto(Long scheduleKey, String userName, LocalDate scheduleDate, String scheduleTitle, String scheduleDescription, String userId) {
+    public ScheduleResponseDto(Long scheduleKey, String userName, LocalDate scheduleDate, String scheduleTitle, String scheduleDescription, String userId, LocalDateTime lastModifiedDateTime) {
         this.scheduleKey = scheduleKey;
         this.userName = userName;
         this.scheduleDate = scheduleDate;
         this.scheduleTitle = scheduleTitle;
         this.scheduleDescription = scheduleDescription;
         this.userId = userId;
+        this.lastModifiedDateTime = lastModifiedDateTime;
     }
 }

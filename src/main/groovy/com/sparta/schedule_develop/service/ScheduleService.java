@@ -4,13 +4,24 @@ import com.sparta.schedule_develop.dto.ScheduleRequestDto;
 import com.sparta.schedule_develop.dto.ScheduleResponseDto;
 import com.sparta.schedule_develop.entity.Schedule;
 import com.sparta.schedule_develop.repository.ScheduleRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ScheduleService {
+
+    @PersistenceContext
+    EntityManager em;
 
     private final ScheduleRepository scheduleRepository;
     public ScheduleService(ScheduleRepository scheduleRepository) {
@@ -35,8 +46,44 @@ public class ScheduleService {
     }
 
     // GET
-    public List<ScheduleResponseDto> getAllSchedules() {
-        return scheduleRepository.findAll().stream().map(ScheduleResponseDto::new).toList();
+    public List<ScheduleResponseDto> getSchedule(Long scheduleKey, String userName, LocalDate scheduleDate) {
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<ScheduleResponseDto> criteriaQuery = criteriaBuilder.createQuery(ScheduleResponseDto.class);
+        Root<Schedule> root = criteriaQuery.from(Schedule.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if(scheduleKey != null){
+            predicates.add(criteriaBuilder.equal(root.get("scheduleKey"), scheduleKey));
+        }
+        if(userName != null && !userName.isEmpty()) {
+            predicates.add(criteriaBuilder.equal(root.get("userName"), userName));
+        }
+        if(scheduleDate != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("scheduleDate"), scheduleDate));
+        }
+
+        if(!predicates.isEmpty()) {
+            criteriaQuery.select(criteriaBuilder.construct(ScheduleResponseDto.class,
+                    root.get("scheduleKey"),
+                    root.get("userName"),
+                    root.get("scheduleDate"),
+                    root.get("scheduleTitle"),
+                    root.get("scheduleDescription"),
+                    root.get("userId"),
+                    root.get("lastModifiedDateTime")))
+                    .where(predicates.toArray(new Predicate[0]));
+        } else {
+            criteriaQuery.select(criteriaBuilder.construct(ScheduleResponseDto.class,
+                    root.get("scheduleKey"),
+                    root.get("userName"),
+                    root.get("scheduleDate"),
+                    root.get("scheduleTitle"),
+                    root.get("scheduleDescription"),
+                    root.get("userId"),
+                    root.get("lastModifiedDateTime")));
+        }
+        return em.createQuery(criteriaQuery).getResultList();
     }
 
     // PUT
@@ -64,4 +111,6 @@ public class ScheduleService {
                 new IllegalArgumentException("선택한 일정이 존재하지 않습니다.")
         );
     }
+
+
 }
