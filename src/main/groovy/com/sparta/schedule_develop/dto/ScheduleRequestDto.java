@@ -12,6 +12,6 @@ public class ScheduleRequestDto {
     private LocalDate scheduleDate;
     private String scheduleTitle;
     private String scheduleDescription;
-//    private String schedulePassword;
+    private String schedulePassword;
     private String userId;
 }

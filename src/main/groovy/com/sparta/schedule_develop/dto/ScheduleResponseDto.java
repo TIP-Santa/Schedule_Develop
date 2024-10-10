@@ -4,6 +4,7 @@ import com.sparta.schedule_develop.entity.Schedule;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class ScheduleResponseDto {
@@ -14,6 +15,8 @@ public class ScheduleResponseDto {
     private String scheduleDescription;
 //    private String schedulePassword;
     private String userId;
+//    private LocalDateTime createdDateTime;
+    private LocalDateTime lastModifiedDateTime;
 
     public ScheduleResponseDto(Schedule schedule) {
         this.scheduleKey = schedule.getScheduleKey();
@@ -22,6 +25,8 @@ public class ScheduleResponseDto {
         this.scheduleDescription = schedule.getScheduleDescription();
         this.scheduleDate = schedule.getScheduleDate();
         this.userId = schedule.getUserId();
+//        this.createdDateTime = schedule.getCreatedDateTime();
+        this.lastModifiedDateTime = schedule.getLastModifiedDateTime();
     }
 
     public ScheduleResponseDto(Long scheduleKey, String userName, LocalDate scheduleDate, String scheduleTitle, String scheduleDescription, String userId) {
@@ -31,6 +36,5 @@ public class ScheduleResponseDto {
         this.scheduleTitle = scheduleTitle;
         this.scheduleDescription = scheduleDescription;
         this.userId = userId;
-
     }
 }

@@ -21,6 +21,12 @@ public class ScheduleService {
     public ScheduleResponseDto createSchedule(ScheduleRequestDto createScheduleRequestDto) {
         // RequestDto > Entity
         Schedule schedule = new Schedule();
+        schedule.setUserName(createScheduleRequestDto.getUserName());
+        schedule.setScheduleDate(createScheduleRequestDto.getScheduleDate());
+        schedule.setScheduleTitle(createScheduleRequestDto.getScheduleTitle());
+        schedule.setScheduleDescription(createScheduleRequestDto.getScheduleDescription());
+        schedule.setSchedulePassword(createScheduleRequestDto.getSchedulePassword());
+        schedule.setUserId(createScheduleRequestDto.getUserId());
         // DB 저장
         Schedule saveSchedule = scheduleRepository.save(schedule);
         // Entity > ResponseDto
