@@ -32,7 +32,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{scheduleKey}")
-    public Long deleteSchedule(@PathVariable Long scheduleKey){
+    public Long deleteSchedule(@PathVariable("scheduleKey") Long scheduleKey){
         return scheduleService.deleteSchedule(scheduleKey);
     }
 
