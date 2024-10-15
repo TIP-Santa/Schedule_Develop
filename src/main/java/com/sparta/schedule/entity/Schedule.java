@@ -23,6 +23,8 @@ public class Schedule extends Timestamped {
     private String scheduleDescription;
     @Column(nullable = false)
     private String schedulePassword;
+    @Column(nullable = false)
+    private Long userKey;
 
     public Schedule(ScheduleRequestDto createScheduleRequestDto) {
         this.writerName = createScheduleRequestDto.getWriterName();
