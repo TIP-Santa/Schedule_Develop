@@ -1,11 +1,12 @@
 package com.sparta.schedule.dto;
 
-import java.time.LocalDate;
+import lombok.Getter;
 
-public class ScheduleRequestDte {
+@Getter
+public class ScheduleRequestDto {
     private String writerName;
-    private LocalDate scheduleDate;
     private String scheduleTitle;
     private String scheduleDescription;
     private String schedulePassword;
 }
+
