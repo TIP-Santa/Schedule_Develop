@@ -1,8 +1,8 @@
 package com.sparta.schedule.service;
 
-import com.sparta.schedule.dto.SchedulePageResponseDto;
-import com.sparta.schedule.dto.ScheduleRequestDto;
-import com.sparta.schedule.dto.ScheduleResponseDto;
+import com.sparta.schedule.dto.schedule.SchedulePageResponseDto;
+import com.sparta.schedule.dto.schedule.ScheduleRequestDto;
+import com.sparta.schedule.dto.schedule.ScheduleResponseDto;
 import com.sparta.schedule.entity.Schedule;
 import com.sparta.schedule.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
