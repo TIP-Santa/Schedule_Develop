@@ -30,14 +30,14 @@ public class MemberController {
 
     // 특정 유저 정보 수정
     @PutMapping("/{userKey}")
-    public MemberResponseDto updateMember(@PathVariable Long userKey, @RequestBody MemberRequestDto updateMemberRequestDto) {
+    public MemberResponseDto updateMember(@PathVariable Long userKey, @Valid @RequestBody MemberRequestDto updateMemberRequestDto) {
         return memberService.updateMember(userKey, updateMemberRequestDto);
     }
 
     // 특정 유저 삭제
     @DeleteMapping("/{userKey}")
-    public Long deleteMember(@PathVariable Long userKey) {
-        return memberService.deleteMember(userKey);
+    public Long deleteMember(@PathVariable Long userKey, @Valid @RequestBody MemberRequestDto deleteMemberRequestDto) {
+        return memberService.deleteMember(userKey, deleteMemberRequestDto);
     }
 
 
