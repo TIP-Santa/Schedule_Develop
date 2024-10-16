@@ -20,7 +20,7 @@ public class Comments extends Timestamped {
     @Column(nullable = false)
     private String comments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_key")
     private Schedule schedule;
 

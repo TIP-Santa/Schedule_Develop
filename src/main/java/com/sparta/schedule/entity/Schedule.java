@@ -28,14 +28,17 @@ public class Schedule extends Timestamped {
     @Column(nullable = false, length = 500)
     private String scheduleDescription;
 
-
     @OneToMany(mappedBy = "schedule")
     private List<Comments> commentsList = new ArrayList<>();
 
-    public void addComments(Comments comments) {
-        this.commentsList.add(comments);
-        comments.setSchedule(this);
-    }
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "member_schedule",
+            joinColumns = @JoinColumn(name = "schedule_key"),
+            inverseJoinColumns = @JoinColumn(name = "user_key")
+    )
+    private List<Member> members = new ArrayList<>();
+
 
     public Schedule(ScheduleRequestDto createScheduleRequestDto) {
         this.writerName = createScheduleRequestDto.getWriterName();

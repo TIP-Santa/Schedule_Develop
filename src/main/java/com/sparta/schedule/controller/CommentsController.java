@@ -2,7 +2,6 @@ package com.sparta.schedule.controller;
 
 import com.sparta.schedule.dto.comments.CommentsRequestDto;
 import com.sparta.schedule.dto.comments.CommentsResponseDto;
-import com.sparta.schedule.entity.Comments;
 import com.sparta.schedule.service.CommentsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
