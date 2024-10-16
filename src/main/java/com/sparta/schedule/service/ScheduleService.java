@@ -5,6 +5,8 @@ import com.sparta.schedule.dto.ScheduleResponseDto;
 import com.sparta.schedule.entity.Schedule;
 import com.sparta.schedule.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +29,11 @@ public class ScheduleService {
 
     // GET
     // findAll
-    public List<ScheduleResponseDto> getAllSchedules() {
-        return scheduleRepository.findAll().stream().map(ScheduleResponseDto::new).toList();
+    public List<ScheduleResponseDto> getAllSchedules(int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<Schedule> schedulePage = scheduleRepository.findAll(pageable);
+        Page<Schedule> schedulePage = scheduleRepository.findAll(PageRequest.of(page, size));
+        return schedulePage.stream().map(ScheduleResponseDto::new).toList();
     }
 
     // PUT
@@ -41,7 +46,7 @@ public class ScheduleService {
     }
 
     // DELETE
-    public Long deleteSchedule(Long scheduleKey) {
+    public Long deleteSchedule(Long scheduleKey, ScheduleRequestDto deleteScheduleRequestDto) {
         Schedule schedule = findSchedule(scheduleKey);
         scheduleRepository.delete(schedule);
         return scheduleKey;

@@ -21,7 +21,10 @@ public class Comments extends Timestamped {
     @Column(nullable = false)
     private String commentsPassword;
     @Column(nullable = false)
-    private Long scheduleKey;
-    @Column(nullable = false)
     private Long userKey;
+
+//    @ManyToOne
+//    @JoinColumn
+//    private Schedule scheduleKey;
+
 }
