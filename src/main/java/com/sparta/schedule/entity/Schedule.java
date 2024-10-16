@@ -27,8 +27,13 @@ public class Schedule extends Timestamped {
     @Column(nullable = false)
     private String schedulePassword;
 
-//    @OneToMany(mappedBy = "schedule")
-//    private List<Schedule> schedules = new ArrayList<Schedule>();
+    @OneToMany(mappedBy = "schedule")
+    private List<Comments> commentsList = new ArrayList<>();
+
+    public void addComments(Comments comments) {
+        this.commentsList.add(comments);
+        comments.setSchedule(this);
+    }
 
     public Schedule(ScheduleRequestDto createScheduleRequestDto) {
         this.writerName = createScheduleRequestDto.getWriterName();

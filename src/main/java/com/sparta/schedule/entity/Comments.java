@@ -23,8 +23,8 @@ public class Comments extends Timestamped {
     @Column(nullable = false)
     private Long userKey;
 
-//    @ManyToOne
-//    @JoinColumn
-//    private Schedule scheduleKey;
+    @ManyToOne
+    @JoinColumn(name = "schedule_key")
+    private Schedule schedule;
 
 }
