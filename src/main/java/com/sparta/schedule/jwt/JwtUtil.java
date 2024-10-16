@@ -1,6 +1,6 @@
 package com.sparta.schedule.jwt;
 
-import com.sparta.schedule.entity.UesrRoleEnum;
+import com.sparta.schedule.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -45,7 +45,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username, UesrRoleEnum role){
+    public String createToken(String username, UserRoleEnum role){
         Date date = new Date();
 
         return BEARER_PREFIX + Jwts.builder().setSubject(username)

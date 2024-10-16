@@ -1,12 +1,12 @@
 package com.sparta.schedule.entity;
 
-public enum UesrRoleEnum {
+public enum UserRoleEnum {
     USER(Authority.USER),
     ADMIN(Authority.ADMIN);
 
     private final String authority;
 
-    UesrRoleEnum(String authority) {
+    UserRoleEnum(String authority) {
         this.authority = authority;
     }
     public String getAuthority() {
