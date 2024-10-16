@@ -51,7 +51,7 @@ public class ScheduleService {
     }
 
     // DELETE
-    public Long deleteSchedule(Long scheduleKey, ScheduleRequestDto deleteScheduleRequestDto) {
+    public Long deleteSchedule(Long scheduleKey) {
         Schedule schedule = findSchedule(scheduleKey);
         scheduleRepository.delete(schedule);
         return scheduleKey;

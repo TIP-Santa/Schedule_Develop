@@ -17,7 +17,7 @@ public class ScheduleController {
     }
 
     // 일정 작성
-    // RequestBody : writerName, ScheduleTitle, ScheduleDescription, SchedulePassword, user_Key
+    // RequestBody : writerName, scheduleDate, ScheduleTitle, ScheduleDescription
     @PostMapping
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto createScheduleRequestDto){
         return scheduleService.createSchedule(createScheduleRequestDto);
@@ -44,7 +44,7 @@ public class ScheduleController {
     // URL : /api/schedule/{scheduleKey}
     // RequestBody : schedulePassword
     @DeleteMapping("/{scheduleKey}")
-    public Long deleteSchedule(@PathVariable Long scheduleKey, @RequestBody ScheduleRequestDto deleteScheduleRequestDto){
-        return scheduleService.deleteSchedule(scheduleKey, deleteScheduleRequestDto);
+    public Long deleteSchedule(@PathVariable Long scheduleKey){
+        return scheduleService.deleteSchedule(scheduleKey);
     }
 }
