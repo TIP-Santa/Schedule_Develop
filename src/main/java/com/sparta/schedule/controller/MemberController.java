@@ -3,6 +3,7 @@ package com.sparta.schedule.controller;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class MemberController {
 
     // 맴버 작성
     @PostMapping
-    public MemberResponseDto createMember(@RequestBody MemberRequestDto createMemberRequestDto) {
+    public MemberResponseDto createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
         MemberResponseDto responseDto = memberService.createMember(createMemberRequestDto);
         return responseDto;
     }
