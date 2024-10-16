@@ -1,11 +1,10 @@
 package com.sparta.schedule.controller;
 
+import com.sparta.schedule.dto.SchedulePageResponseDto;
 import com.sparta.schedule.dto.ScheduleRequestDto;
 import com.sparta.schedule.dto.ScheduleResponseDto;
 import com.sparta.schedule.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/schedule")
@@ -27,7 +26,7 @@ public class ScheduleController {
     // 전체 일정 조회 (페이징)
     // URL : /api/schedule?page=0&size=10
     @GetMapping
-    public List<ScheduleResponseDto> getAllSchedules(
+    public SchedulePageResponseDto getAllSchedules(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
         return scheduleService.getAllSchedules(page, size);

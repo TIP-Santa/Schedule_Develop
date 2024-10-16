@@ -1,5 +1,6 @@
 package com.sparta.schedule.service;
 
+import com.sparta.schedule.dto.SchedulePageResponseDto;
 import com.sparta.schedule.dto.ScheduleRequestDto;
 import com.sparta.schedule.dto.ScheduleResponseDto;
 import com.sparta.schedule.entity.Schedule;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
@@ -29,11 +31,14 @@ public class ScheduleService {
 
     // GET
     // findAll
-    public List<ScheduleResponseDto> getAllSchedules(int page, int size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<Schedule> schedulePage = scheduleRepository.findAll(pageable);
-        Page<Schedule> schedulePage = scheduleRepository.findAll(PageRequest.of(page, size));
-        return schedulePage.stream().map(ScheduleResponseDto::new).toList();
+    public SchedulePageResponseDto getAllSchedules(int page, int size) {
+        Page<Schedule> schedulePage = scheduleRepository.findAllByOrderByModifiedDateTimeDesc(PageRequest.of(page, size));
+
+        List<ScheduleResponseDto> scheduleDtos = schedulePage.stream()
+                .map(ScheduleResponseDto::new)
+                .collect(Collectors.toList());
+
+        return new SchedulePageResponseDto(scheduleDtos);
     }
 
     // PUT
