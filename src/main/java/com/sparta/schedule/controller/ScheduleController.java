@@ -31,6 +31,12 @@ public class ScheduleController {
             @RequestParam(defaultValue = "10") int size){
         return scheduleService.getAllSchedules(page, size);
     }
+    // 특정 일정 조회
+    //
+    @GetMapping("/{scheduleKey}")
+    public ScheduleResponseDto getScheduleByKey(@PathVariable Long scheduleKey){
+        return scheduleService.getScheduleByKey(scheduleKey);
+    }
 
     // 특정 일정 수정
     // URL : /api/schedule/{scheduleKey}

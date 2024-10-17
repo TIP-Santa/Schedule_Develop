@@ -15,7 +15,7 @@ public class ScheduleResponseDto {
     private String scheduleDescription;
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
-
+    private int commentsCount;
 
     public ScheduleResponseDto(Schedule schedule) {
         this.scheduleKey = schedule.getScheduleKey();
@@ -25,5 +25,6 @@ public class ScheduleResponseDto {
         this.scheduleDescription = schedule.getScheduleDescription();
         this.createdDateTime = schedule.getCreatedDateTime();
         this.modifiedDateTime = schedule.getModifiedDateTime();
+        this.commentsCount = schedule.getCommentsList().size();
     }
 }

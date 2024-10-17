@@ -40,6 +40,11 @@ public class ScheduleService {
 
         return new SchedulePageResponseDto(scheduleDtos);
     }
+    // findByScheduleKey
+    public ScheduleResponseDto getScheduleByKey(Long scheduleKey) {
+        Schedule schedule = findSchedule(scheduleKey);
+        return new ScheduleResponseDto(schedule);
+    }
 
     // PUT
     @Transactional
