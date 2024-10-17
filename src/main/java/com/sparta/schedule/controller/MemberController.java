@@ -1,8 +1,10 @@
 package com.sparta.schedule.controller;
 
+import com.sparta.schedule.dto.member.LoginRequestDto;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,11 @@ public class MemberController {
     @PostMapping
     public MemberResponseDto createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
         MemberResponseDto responseDto = memberService.createMember(createMemberRequestDto);
+        return responseDto;
+    }
+    @PostMapping("/login")
+    public MemberResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse res) {
+        MemberResponseDto responseDto = memberService.login(loginRequestDto, res);
         return responseDto;
     }
 
