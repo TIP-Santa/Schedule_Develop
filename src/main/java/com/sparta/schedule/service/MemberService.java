@@ -26,6 +26,16 @@ public class MemberService {
 
     // POST
     public MemberResponseDto createMember(MemberRequestDto createMemberRequestDto) {
+        // 동일 아이디 조회
+        if (memberRepository.existsByUserName(createMemberRequestDto.getUserName())) {
+            throw new IllegalArgumentException("이미 존재하는 이름입니다.");
+        }
+        // 동일 이메일 조회
+        if(memberRepository.existsByUserEmail(createMemberRequestDto.getUserEmail())) {
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+        }
+
+
         Member member = new Member(createMemberRequestDto);
         member.setPassword(passwordEncoder.encode(createMemberRequestDto.getPassword()));
         memberRepository.save(member);

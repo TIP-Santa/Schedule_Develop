@@ -4,6 +4,8 @@ import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.service.MemberService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +22,11 @@ public class MemberController {
     public MemberResponseDto createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
         MemberResponseDto responseDto = memberService.createMember(createMemberRequestDto);
         return responseDto;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
     // 특정 유저 조회
