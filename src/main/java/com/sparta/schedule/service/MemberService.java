@@ -38,6 +38,7 @@ public class MemberService {
 
         Member member = new Member(createMemberRequestDto);
         member.setPassword(passwordEncoder.encode(createMemberRequestDto.getPassword()));
+        member.setUserRole(createMemberRequestDto.getUserRole());
         memberRepository.save(member);
         String jwtToken = jwtUtil.createToken(member.getUserName(), member.getUserRole());
         return new MemberResponseDto(member, jwtToken);

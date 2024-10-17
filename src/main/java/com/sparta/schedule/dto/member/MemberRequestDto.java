@@ -1,7 +1,9 @@
 package com.sparta.schedule.dto.member;
 
+import com.sparta.schedule.entity.UserRoleEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
@@ -13,4 +15,6 @@ public class MemberRequestDto {
     private String userEmail;
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String password;
+    @NotNull(message = "권한을 입력해주세요.")
+    private UserRoleEnum userRole;
 }
