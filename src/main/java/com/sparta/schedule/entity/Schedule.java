@@ -37,7 +37,7 @@ public class Schedule extends Timestamped {
             joinColumns = @JoinColumn(name = "schedule_key"),
             inverseJoinColumns = @JoinColumn(name = "user_key")
     )
-    private List<Member> members = new ArrayList<>();
+    private List<MemberSchedule> memberSchedules = new ArrayList<>();
 
 
     public Schedule(ScheduleRequestDto createScheduleRequestDto) {

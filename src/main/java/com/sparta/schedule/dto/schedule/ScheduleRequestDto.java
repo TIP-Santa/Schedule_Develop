@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 public class ScheduleRequestDto {
@@ -15,5 +16,6 @@ public class ScheduleRequestDto {
     private String scheduleTitle;
     @NotBlank(message = "일정의 내용을 입력해주세요.")
     private String scheduleDescription;
+    private List<Long> managerKeys;
 }
 

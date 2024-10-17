@@ -17,7 +17,7 @@ public class ScheduleController {
     }
 
     // 일정 작성
-    // RequestBody : writerName, scheduleDate, ScheduleTitle, ScheduleDescription
+    // RequestBody : writerName, scheduleDate, ScheduleTitle, ScheduleDescription, managers
     @PostMapping
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto createScheduleRequestDto){
         return scheduleService.createSchedule(createScheduleRequestDto);

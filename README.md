@@ -18,6 +18,7 @@
   - 일정 수정은 `scheduleDate`, `scheduleTitle`, `scheduleDescription` 만 수정 가능
 - 일정 삭제 가능
   - 일정을 삭제하기 위해서는 해당 일정의 `scheduleKey`가 필요
+  - 일정 삭제 시 해당 일정에 작성된 댓글이 같이 삭제
 
 ### Member
 - 비밀번호는 암호화되어 저장됩니다.
