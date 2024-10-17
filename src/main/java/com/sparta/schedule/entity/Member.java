@@ -25,8 +25,8 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private String userEmail;
     @Column(nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private UserRoleEnum userRole;
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum userRole;
 
     @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
     private List<Schedule> schedules = new ArrayList<>();

@@ -4,6 +4,7 @@ import com.sparta.schedule.config.PasswordEncoder;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.entity.Member;
+import com.sparta.schedule.jwt.JwtUtil;
 import com.sparta.schedule.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.memberRepository = memberRepository;
-        this.passwordEncoder = new PasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     // POST
@@ -26,7 +29,8 @@ public class MemberService {
         Member member = new Member(createMemberRequestDto);
         member.setPassword(passwordEncoder.encode(createMemberRequestDto.getPassword()));
         memberRepository.save(member);
-        return new MemberResponseDto(member);
+        String jwtToken = jwtUtil.createToken(member.getUserName(), member.getUserRole());
+        return new MemberResponseDto(member, jwtToken);
     }
 
     // GET
