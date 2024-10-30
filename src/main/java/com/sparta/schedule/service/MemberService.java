@@ -8,9 +8,9 @@ import com.sparta.schedule.entity.Member;
 import com.sparta.schedule.entity.UserRoleEnum;
 import com.sparta.schedule.jwt.JwtUtil;
 import com.sparta.schedule.repository.MemberRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +20,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    @Autowired
+    private LogoutTokenService logoutTokenService;
 
     @Autowired
     public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
@@ -61,10 +64,13 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         String token = jwtUtil.createToken(member.getUserEmail(), member.getUserRole());
-        jwtUtil.addJwtToCookie(token, response);
+        response.setHeader("Authorization", token);
     }
-    public void logout(HttpServletResponse response) {
-        jwtUtil.removeJwtToken(response);
+    public void logout(HttpServletRequest request) {
+        String token = jwtUtil.getJwtFromHeader(request);
+        if(token != null) {
+            logoutTokenService.addLogoutToken(token);
+        }
     }
 
     // GET

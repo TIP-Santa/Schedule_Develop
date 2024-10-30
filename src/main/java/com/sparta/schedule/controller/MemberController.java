@@ -4,6 +4,7 @@ import com.sparta.schedule.dto.member.LoginRequestDto;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,8 @@ public class MemberController {
         }
     }
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletResponse response) {
-        memberService.logout(response);
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        memberService.logout(request);
         return ResponseEntity.ok("정상적으로 로그아웃되었습니다.");
     }
 
