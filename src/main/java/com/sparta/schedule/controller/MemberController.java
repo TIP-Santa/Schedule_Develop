@@ -1,8 +1,10 @@
 package com.sparta.schedule.controller;
 
+import com.sparta.schedule.dto.member.LoginRequestDto;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,21 @@ public class MemberController {
     }
 
     // 회원 가입
-    @PostMapping
-    public ResponseEntity<String> createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
-        memberService.createMember(createMemberRequestDto);
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
+        memberService.signup(createMemberRequestDto);
         return ResponseEntity.ok("회원가입 성공");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletResponse response) {
+        memberService.login(requestDto, response);
+        return ResponseEntity.ok("정상적으로 로그인되었습니다.");
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        memberService.logout(response);
+        return ResponseEntity.ok("정상적으로 로그아웃되었습니다.");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
