@@ -33,12 +33,16 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
+        String method = httpServletRequest.getMethod();
 
         if (StringUtils.hasText(url) &&
-                (url.equals("/api/member/login") || url.equals("/api/member/signup"))
-        ) {
+                ((url.startsWith("/api/schedule/") && method.equals("GET"))
+                        || url.equals("/api/member/login")
+                        || url.equals("/api/member/signup")
+                )
+                ) {
             chain.doFilter(request, response);
-        } else {
+        } else{
             String tokenValue = jwtUtil.getTokenFromRequest(httpServletRequest);
             if (StringUtils.hasText(tokenValue)) {
                 String token = jwtUtil.substringToken(tokenValue);
