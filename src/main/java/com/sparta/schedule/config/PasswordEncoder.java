@@ -1,7 +1,6 @@
 package com.sparta.schedule.config;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 
 @Component

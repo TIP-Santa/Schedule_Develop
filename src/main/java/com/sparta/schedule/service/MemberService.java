@@ -21,8 +21,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @Autowired
-    private LogoutTokenService logoutTokenService;
 
     @Autowired
     public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
@@ -32,7 +30,7 @@ public class MemberService {
     }
 
     // 회원가입
-    public MemberResponseDto signup(MemberRequestDto createMemberRequestDto) {
+    public void signup(MemberRequestDto createMemberRequestDto) {
         // 동일 아이디 조회
         if (memberRepository.existsByUsername(createMemberRequestDto.getUsername())) {
             throw new IllegalArgumentException("이미 존재하는 이름입니다.");
@@ -51,8 +49,6 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(createMemberRequestDto.getPassword()));
         member.setUserRole(checkedRole);
         memberRepository.save(member);
-        String jwtToken = jwtUtil.createToken(member.getUsername(), member.getUserRole());
-        return new MemberResponseDto(member, jwtToken);
     }
 
     // 로그인
@@ -64,13 +60,12 @@ public class MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         String token = jwtUtil.createToken(member.getUserEmail(), member.getUserRole());
-        response.setHeader("Authorization", token);
+        jwtUtil.addJwtCookie(token, response);
     }
-    public void logout(HttpServletRequest request) {
-        String token = jwtUtil.getJwtFromHeader(request);
-        if(token != null) {
-            logoutTokenService.addLogoutToken(token);
-        }
+
+    // 로그아웃
+    public void logout(HttpServletResponse response) {
+        jwtUtil.removeJwtCookie(response);
     }
 
     // GET
@@ -110,6 +105,7 @@ public class MemberService {
                 new RuntimeException("선택한 유저를 찾을 수 없습니다.")
         );
     }
+
 
 
 }
