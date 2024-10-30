@@ -28,8 +28,12 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletResponse response) {
-        memberService.login(requestDto, response);
-        return ResponseEntity.ok("정상적으로 로그인되었습니다.");
+        try {
+            memberService.login(requestDto, response);
+            return ResponseEntity.ok("정상적으로 로그인되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
