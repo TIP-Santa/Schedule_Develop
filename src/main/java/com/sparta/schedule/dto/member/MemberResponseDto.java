@@ -16,7 +16,7 @@ public class MemberResponseDto {
 
     public MemberResponseDto(Member savedMember, String jwtToken) {
         this.userKey = savedMember.getUserKey();
-        this.userName = savedMember.getUserName();
+        this.userName = savedMember.getUsername();
         this.userEmail = savedMember.getUserEmail();
         this.createdDateTime = savedMember.getCreatedDateTime();
         this.modifiedDateTime = savedMember.getModifiedDateTime();
@@ -24,7 +24,7 @@ public class MemberResponseDto {
     }
     public MemberResponseDto(Member savedMember) {
         this.userKey = savedMember.getUserKey();
-        this.userName = savedMember.getUserName();
+        this.userName = savedMember.getUsername();
         this.userEmail = savedMember.getUserEmail();
         this.createdDateTime = savedMember.getCreatedDateTime();
         this.modifiedDateTime = savedMember.getModifiedDateTime();

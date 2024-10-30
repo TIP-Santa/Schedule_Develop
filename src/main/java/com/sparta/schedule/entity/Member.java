@@ -19,7 +19,7 @@ public class Member extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userKey;
     @Column(nullable = false)
-    private String userName;
+    private String username;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -28,11 +28,11 @@ public class Member extends Timestamped {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum userRole;
 
-    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
-    private List<Schedule> schedules = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MemberSchedule> memberSchedules = new ArrayList<>();
 
     public Member(MemberRequestDto createMemberRequestDto) {
-        this.userName = createMemberRequestDto.getUserName();
+        this.username = createMemberRequestDto.getUsername();
         this.userEmail = createMemberRequestDto.getUserEmail();
         this.password = createMemberRequestDto.getPassword();
     }

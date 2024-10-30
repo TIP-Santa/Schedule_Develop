@@ -17,11 +17,11 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    // 맴버 작성
+    // 회원 가입
     @PostMapping
-    public MemberResponseDto createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
-        MemberResponseDto responseDto = memberService.createMember(createMemberRequestDto);
-        return responseDto;
+    public ResponseEntity<String> createMember(@Valid @RequestBody MemberRequestDto createMemberRequestDto) {
+        memberService.createMember(createMemberRequestDto);
+        return ResponseEntity.ok("회원가입 성공");
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

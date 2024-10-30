@@ -4,6 +4,7 @@ import com.sparta.schedule.config.PasswordEncoder;
 import com.sparta.schedule.dto.member.MemberRequestDto;
 import com.sparta.schedule.dto.member.MemberResponseDto;
 import com.sparta.schedule.entity.Member;
+import com.sparta.schedule.entity.UserRoleEnum;
 import com.sparta.schedule.jwt.JwtUtil;
 import com.sparta.schedule.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -24,10 +25,10 @@ public class MemberService {
         this.jwtUtil = jwtUtil;
     }
 
-    // POST
+    // 회원가입
     public MemberResponseDto createMember(MemberRequestDto createMemberRequestDto) {
         // 동일 아이디 조회
-        if (memberRepository.existsByUserName(createMemberRequestDto.getUserName())) {
+        if (memberRepository.existsByUsername(createMemberRequestDto.getUsername())) {
             throw new IllegalArgumentException("이미 존재하는 이름입니다.");
         }
         // 동일 이메일 조회
@@ -35,12 +36,19 @@ public class MemberService {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
         }
 
+        UserRoleEnum checkedRole;
+        if(createMemberRequestDto.isUserRole()){
+            checkedRole = UserRoleEnum.ADMIN;
+        } else {
+            checkedRole = UserRoleEnum.USER;
+        }
+
 
         Member member = new Member(createMemberRequestDto);
         member.setPassword(passwordEncoder.encode(createMemberRequestDto.getPassword()));
-        member.setUserRole(createMemberRequestDto.getUserRole());
+        member.setUserRole(checkedRole);
         memberRepository.save(member);
-        String jwtToken = jwtUtil.createToken(member.getUserName(), member.getUserRole());
+        String jwtToken = jwtUtil.createToken(member.getUsername(), member.getUserRole());
         return new MemberResponseDto(member, jwtToken);
     }
 

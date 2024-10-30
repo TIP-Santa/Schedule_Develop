@@ -31,12 +31,7 @@ public class Schedule extends Timestamped {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE)
     private List<Comments> commentsList = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "member_schedule",
-            joinColumns = @JoinColumn(name = "schedule_key"),
-            inverseJoinColumns = @JoinColumn(name = "user_key")
-    )
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MemberSchedule> memberSchedules = new ArrayList<>();
 
 
