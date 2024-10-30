@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -18,8 +17,15 @@ import org.springframework.web.server.ResponseStatusException;
 public class MemberController {
 
     private final MemberService memberService;
+
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    // error Test
+    @GetMapping("/error")
+    public ResponseEntity<String> throwError() {
+        throw new IllegalArgumentException("테스트용 오류 발생!");
     }
 
     // 회원 가입
@@ -29,6 +35,7 @@ public class MemberController {
         return ResponseEntity.ok("회원가입 성공");
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletResponse response) {
         try {
@@ -38,6 +45,7 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
         try {
@@ -47,13 +55,6 @@ public class MemberController {
             log.error("Logout error: {}", e.getMessage());
             throw new RuntimeException("Logout Failed", e);
         }
-
-
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
     // 특정 유저 조회
@@ -73,6 +74,4 @@ public class MemberController {
     public Long deleteMember(@PathVariable Long userKey, @Valid @RequestBody MemberRequestDto deleteMemberRequestDto) {
         return memberService.deleteMember(userKey, deleteMemberRequestDto);
     }
-
-
 }
